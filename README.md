@@ -2,6 +2,13 @@
 
 A frontend application for simulating elevator operations using React, Vite, TypeScript, and Sass. Uses Yarn for package management.
 
+## Configuration
+
+<ul>
+  <li>On the (.env.development file) apply the (elevator.simulation.api) endpoint </li>
+  <li>Make sure the backend API is running and CORS is configured to allow requests from the frontend.</li>
+</ul>
+
 ## Installation & Running
 
 Install dependencies
@@ -15,13 +22,6 @@ Run Vite Development server
 ```
 yarn dev
 ```
-
-## Configuration
-
-<ul>
-  <li>On the (.env.development file) apply the (elevator.simulation.api) endpoint </li>
-  <li>Make sure the backend API is running and CORS is configured to allow requests from the frontend.</li>
-</ul>
 
 ## Screenshot
 
