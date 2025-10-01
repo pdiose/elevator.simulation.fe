@@ -1,17 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import type { SimulationState, ElevatorConfiguration } from '../types/elevatorTypes';
 import { elevatorService } from '../services/elevatorService';
+import { envElevatorConfig } from '../utils/envHelpers';
 import { numInputChange } from '../utils/inputHelpers';
 
 const ElevatorSimulator: React.FC = () => {
     const [state, setState] = useState<SimulationState | null>(null);
-    const [config, setConfig] = useState<ElevatorConfiguration>({
-        numberOfFloors: 10,
-        numberOfElevators: 2,
-        travelTimePerFloor: 10,
-        loadingTime: 10,
-        randomElevatorStart: false
-    });
+    const [config, setConfig] = useState<ElevatorConfiguration>(envElevatorConfig());
     const [manualCall, setManualCall] = useState({ fromFloor: 1, toFloor: 2 });
     const [randomCallsCount, setRandomCallsCount] = useState(5);
     const [autoStep, setAutoStep] = useState(false);
@@ -35,15 +30,14 @@ const ElevatorSimulator: React.FC = () => {
         try {
             const newState = await elevatorService.getState();
             setState(newState);
-            setConfig(newState.configuration);
         } catch (error) {
             console.error('Failed to load state:', error);
         }
     };
 
-    const updateConfiguration = async () => {
+    const updateConfiguration = async (cfg?: ElevatorConfiguration) => {
         try {
-            const newState = await elevatorService.updateConfiguration(config);
+            const newState = await elevatorService.updateConfiguration(cfg ?? config);
 
             setState(newState);
         } catch (error) {
@@ -53,8 +47,9 @@ const ElevatorSimulator: React.FC = () => {
 
     const resetElevators = async () => {
         try {
-            const newState = await elevatorService.resetElevators();
-            setState(newState);
+            const cfg = envElevatorConfig();
+            setConfig(cfg);
+            await updateConfiguration(cfg);
         } catch (error) {
             console.error('Failed to reset elevators:', error);
         }
@@ -149,7 +144,7 @@ const ElevatorSimulator: React.FC = () => {
                     <button onClick={resetElevators}>
                         Reset Elevators
                     </button>
-                    <button onClick={updateConfiguration} className="secondary">
+                    <button onClick={() => updateConfiguration()} className="secondary">
                         Apply Configuration
                     </button>
                     <button
@@ -252,7 +247,7 @@ const ElevatorSimulator: React.FC = () => {
                             </div>
                         )}
                     </div>
-                </div>  
+                </div>
 
                 <div className="building-view">
                     <h2> School Building Elevators</h2>
