@@ -18,13 +18,6 @@ export const elevatorService = {
     return await response.json();
   },
 
-  async resetElevators(): Promise<SimulationState> {
-    const response = await fetch(`${ELEVATOR_API}/reset`, {
-      method: 'POST',
-    });
-    return await response.json();
-  },
-
   async callElevator(fromFloor: number, toFloor: number): Promise<SimulationState> {
     const response = await fetch(`${ELEVATOR_API}/call`, {
       method: 'POST',
