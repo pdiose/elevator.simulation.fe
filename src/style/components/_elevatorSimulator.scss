@@ -1,3 +1,5 @@
+@use '../globals/globals' as *;
+
 .elevator-simulator {
   font-family: 'Comic Sans MS', cursive, sans-serif;
   background: linear-gradient(135deg, $background-color 0%, #E8F4F8 100%);

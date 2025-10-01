@@ -260,7 +260,8 @@ const ElevatorSimulator: React.FC = () => {
                         {state.elevators.map((elevator) => (
                             <div key={elevator.id} className={`elevator ${elevator.statusInfo.toLowerCase()}`}>
                                 <div className="elevator-number">Elevator #{elevator.id}</div>
-                                <div className="elevator-floor">Floor {elevator.currentFloor}</div>
+                                <div className="elevator-floor">Floor</div>
+                                <div className="elevator-floor">{elevator.currentFloor}</div>
                                 <div className={`elevator-status ${elevator.statusInfo.toLowerCase()}`}>
                                     {elevator.statusInfo}
                                 </div>

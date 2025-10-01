@@ -1,4 +1,2 @@
-@import './style/globals/colors';
-@import './style/globals/buttons';
-
-@import './style/components/elevatorSimulator';
+@use './style/globals/globals' as *;
+@use './style/components/elevatorSimulator' as *
