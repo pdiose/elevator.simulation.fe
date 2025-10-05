@@ -38,7 +38,6 @@ const ElevatorSimulator: React.FC = () => {
     const updateConfiguration = async (cfg?: ElevatorConfiguration) => {
         try {
             const newState = await elevatorService.updateConfiguration(cfg ?? config);
-
             setState(newState);
         } catch (error) {
             console.error('Failed to update configuration:', error);
@@ -49,7 +48,14 @@ const ElevatorSimulator: React.FC = () => {
         try {
             const cfg = envElevatorConfig();
             setConfig(cfg);
+            setManualCall({
+                    ...manualCall,
+                    fromFloor: numInputChange('1', config.numberOfFloors),
+                    toFloor: numInputChange('2', config.numberOfFloors),
+                    })
+            setRandomCallsCount(numInputChange('5', 50))
             await updateConfiguration(cfg);
+
         } catch (error) {
             console.error('Failed to reset elevators:', error);
         }
@@ -227,13 +233,13 @@ const ElevatorSimulator: React.FC = () => {
                                         <span>Call #:</span> {call.callId}
                                     </div>
                                     <div>
+                                        <span>Elevator:</span> {call.assignedElevator ? `#${call.assignedElevator}` : 'Waiting'}
+                                    </div>
+                                    <div>
                                         <span>From:</span> Floor {call.fromFloor}
                                     </div>
                                     <div>
                                         <span>To:</span> Floor {call.toFloor}
-                                    </div>
-                                    <div>
-                                        <span>Elevator:</span> {call.assignedElevator ? `#${call.assignedElevator}` : 'Waiting'}
                                     </div>
                                 </div>
                                 <div className={`call-status ${call.statusInfo.toLowerCase()}`}>
